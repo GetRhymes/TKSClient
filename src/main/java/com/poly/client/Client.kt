@@ -12,7 +12,6 @@ import java.net.Socket
 import java.net.SocketException
 
 object Client {
-
     fun startClient(serverHost: String, serverPort: Int) {
         val socket = Socket(serverHost, serverPort)
 
@@ -53,7 +52,8 @@ object Client {
                 if (content != null) {
                     fileBlock = "$ATTACHMENT ${writeNewFile(message.fileName, content)}"
                 }
-                println("[${message.message}][${message.name}]: ${message.message} $fileBlock")
+                val (date, time) = parseDateTime(message.date)
+                println("[${date}][${time}][${message.name}]: ${message.message} $fileBlock")
             }
         }
     }
@@ -75,5 +75,11 @@ object Client {
         fos.write(fileContent)
         fos.close()
         return resultFile.absolutePath
+    }
+
+    private fun parseDateTime(inputDateTime: String): Pair<String, String> {
+        val (date, time) = inputDateTime.split(SPACE)
+        val partsTime = time.split(TIME_SEPARATOR)
+        return date to "${partsTime[0]}$DOUBLE_DOT${partsTime[1]}$DOUBLE_DOT${partsTime[2]}"
     }
 }

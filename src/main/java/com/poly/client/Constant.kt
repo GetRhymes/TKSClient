@@ -17,6 +17,10 @@ const val FILE_POINT = "fp-/"
 
 //Values
 const val VOID = ""
+const val SPACE = " "
+const val DATE_SEPARATOR = "-"
+const val TIME_SEPARATOR = "."
+const val DOUBLE_DOT = ":"
 
 //Server
 const val SERVER_HOST = "78.37.108.101"

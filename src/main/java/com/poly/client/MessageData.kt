@@ -7,7 +7,6 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 object MessageData {
-
     var userName = VOID
 
     private class PolyFile(val fileName: String? = null, val fileSize: Int? = null, val fileContent: ByteArray? = null)
