@@ -1,4 +1,4 @@
-package com.poly.client
+package com.poly.client.util
 
 //Log
 const val ERROR = "[ERROR]"

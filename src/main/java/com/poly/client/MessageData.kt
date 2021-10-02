@@ -1,5 +1,7 @@
 package com.poly.client
 
+import com.poly.client.util.FILE_POINT
+import com.poly.client.util.VOID
 import com.poly.models.Message
 import com.poly.models.MessageWithContent
 import java.io.File

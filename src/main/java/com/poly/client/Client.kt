@@ -3,6 +3,8 @@ package com.poly.client
 import com.poly.client.Buffer.receiverBuffer
 import com.poly.client.Buffer.senderBuffer
 import com.poly.client.MessageData.userName
+import com.poly.client.util.*
+import com.poly.models.MessageWithContent
 import com.poly.sockets.MessageReader
 import com.poly.sockets.MessageWriter
 import java.io.File
@@ -10,6 +12,12 @@ import java.io.FileOutputStream
 import java.lang.Thread.sleep
 import java.net.Socket
 import java.net.SocketException
+import java.util.*
+
+object Buffer {
+    val receiverBuffer = LinkedList<MessageWithContent>()
+    val senderBuffer = LinkedList<MessageWithContent>()
+}
 
 object Client {
     fun startClient(serverHost: String, serverPort: Int) {
