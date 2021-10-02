@@ -77,4 +77,3 @@ object Client {
         return resultFile.absolutePath
     }
 }
-//privet fp:-/ /Users/a19501710/StudProject/TKSClient/pom.xml

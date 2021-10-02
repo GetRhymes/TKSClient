@@ -26,4 +26,3 @@ object Buffer {
     val receiverBuffer = LinkedList<MessageWithContent>()
     val senderBuffer = LinkedList<MessageWithContent>()
 }
-
