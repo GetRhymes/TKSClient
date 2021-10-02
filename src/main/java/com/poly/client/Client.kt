@@ -53,7 +53,7 @@ object Client {
                     fileBlock = "$ATTACHMENT ${writeNewFile(message.fileName, content)}"
                 }
                 val (date, time) = parseDateTime(message.date)
-                println("[${date}][${time}][${message.name}]$DOUBLE_DOT ${message.message} $fileBlock")
+                println("[${date}][${time}][${message.name}]$DOUBLE_DOT ${message.text} $fileBlock")
             }
         }
     }
