@@ -1,16 +1,16 @@
 package com.poly.client
 
-import com.poly.models.Message
+import com.poly.models.MessageWithContent
 import java.util.*
 
 
-fun main(args: Array<String>) {
+fun main() {
     println("Write your name:")
     val scanner = Scanner(System.`in`)
     MessageData.userName = scanner.nextLine()
 
     Thread {
-        Client.startClient("78.37.108.101", 65432)
+        Client.startClient(SERVER_HOST, SERVER_PORT)
     }.start()
 
     Thread {
@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
 }
 
 object Buffer {
-    val receiverBuffer = LinkedList<Pair<Message, ByteArray?>>()
-    val senderBuffer = LinkedList<Pair<Message, ByteArray?>>()
+    val receiverBuffer = LinkedList<MessageWithContent>()
+    val senderBuffer = LinkedList<MessageWithContent>()
 }
 

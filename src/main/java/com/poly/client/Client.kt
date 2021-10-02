@@ -3,7 +3,6 @@ package com.poly.client
 import com.poly.client.Buffer.receiverBuffer
 import com.poly.client.Buffer.senderBuffer
 import com.poly.client.MessageData.userName
-import com.poly.models.MessageWithContent
 import com.poly.sockets.MessageReader
 import com.poly.sockets.MessageWriter
 import java.io.File
@@ -13,6 +12,7 @@ import java.net.Socket
 import java.net.SocketException
 
 object Client {
+
     fun startClient(serverHost: String, serverPort: Int) {
         val socket = Socket(serverHost, serverPort)
 
@@ -24,14 +24,15 @@ object Client {
         while (!exitCondition) {
             if (socket.isConnected) {
                 if (senderBuffer.size > 0) {
-                    val (message, fileContent) = senderBuffer.poll()
-                    sender.write(MessageWithContent(message, fileContent))
+                    val messageWithContent = senderBuffer.poll()
+                    sender.write(messageWithContent)
                 } else if (receiver.readyForMessageReading()) {
                     val message = receiver.read()
-                    receiverBuffer.add(message.message to message.content)
+                    receiverBuffer.add(message)
                 }
             } else {
                 exitCondition = true
+                println("$ERROR $CONNECTION_LOST")
             }
         }
         try {
@@ -45,24 +46,30 @@ object Client {
         while (true) {
             sleep(1)
             if (receiverBuffer.size > 0) {
-                val (message, fileContent) = receiverBuffer.poll()
-                var fileBlock = ""
-                if (!message.fileName.isNullOrEmpty() && fileContent != null) {
-                    fileBlock = "[Attachment] ${writeNewFile(message.fileName, fileContent)}"
+                val messageWithContent = receiverBuffer.poll()
+                var fileBlock = VOID
+                val message = messageWithContent.message
+                val content: ByteArray? = messageWithContent.content
+                if (content != null) {
+                    fileBlock = "$ATTACHMENT ${writeNewFile(message.fileName, content)}"
                 }
-                println("[${message.date}][${message.name}]: ${message.message} $fileBlock")
+                println("[${message.message}][${message.name}]: ${message.message} $fileBlock")
             }
         }
     }
 
     private fun createDir(): String {
-        val directory = File(System.getProperty("user.home") + "/Desktop/${userName}_output")
+        val directory = File(
+            System.getProperty(USER_HOME) +
+                    File.separator + DESKTOP +
+                    File.separator + userName
+        )
         if (!directory.exists()) directory.mkdir()
         return directory.absolutePath
     }
 
     private fun writeNewFile(fileName: String, fileContent: ByteArray): String {
-        val resultFile = File("${createDir()}/$fileName")
+        val resultFile = File("${createDir()}${File.separator}$fileName")
         resultFile.createNewFile()
         val fos = FileOutputStream(resultFile)
         fos.write(fileContent)

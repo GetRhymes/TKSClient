@@ -1,13 +1,14 @@
 package com.poly.client
 
 import com.poly.models.Message
+import com.poly.models.MessageWithContent
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
 
 object MessageData {
 
-    var userName = ""
+    var userName = VOID
 
     private class PolyFile(val fileName: String? = null, val fileSize: Int? = null, val fileContent: ByteArray? = null)
 
@@ -18,9 +19,12 @@ object MessageData {
         return PolyFile(fileName, fileSize, fileContent)
     }
 
-    fun createMessage(message: String): Pair<Message, ByteArray?> {
-        val partsOfMessage = message.split("fp:-/")
+    fun createMessage(message: String): MessageWithContent {
+        val partsOfMessage = message.split(FILE_POINT)
         val polyFile = if (partsOfMessage.size > 1) getPolyFile(partsOfMessage[1].trim()) else PolyFile()
-        return Message(null, userName, partsOfMessage[0], polyFile.fileName, polyFile.fileSize) to polyFile.fileContent
+        return MessageWithContent(
+            Message(null, userName, partsOfMessage[0], polyFile.fileName, polyFile.fileSize),
+            polyFile.fileContent
+        )
     }
 }
