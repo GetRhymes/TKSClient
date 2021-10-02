@@ -21,8 +21,13 @@ object MessageData {
     }
 
     fun createMessage(message: String): MessageWithContent {
-        val partsOfMessage = message.split(FILE_POINT)
-        val polyFile = if (partsOfMessage.size > 1) getPolyFile(partsOfMessage[1].trim()) else PolyFile()
+        val partsOfMessage = message.split(FILE_POINT).toMutableList()
+        var polyFile = PolyFile()
+        if (partsOfMessage.size > 1) {
+            if (!File(partsOfMessage[1].trim()).exists() || File(partsOfMessage[1].trim()).isDirectory) {
+                partsOfMessage[0] += "fp:-/${partsOfMessage[1]}"
+            } else polyFile = getPolyFile(partsOfMessage[1].trim())
+        }
         return MessageWithContent(
             Message(null, userName, partsOfMessage[0], polyFile.fileName, polyFile.fileSize),
             polyFile.fileContent

@@ -13,7 +13,7 @@ const val ATTACHMENT = "[Attachment]"
 //Files
 const val USER_HOME = "user.home"
 const val DESKTOP = "Desktop"
-const val FILE_POINT = "fp-/"
+const val FILE_POINT = "fp:-/"
 
 //Values
 const val VOID = ""
