@@ -35,4 +35,14 @@ class MessageDataTest {
         )
         file.delete()
     }
+
+    @Test
+    fun testRussianLanguage() {
+        userName = "Никита"
+        val message = MessageData.createMessage("Привет, как дела: что делаешь?")
+        Assert.assertEquals(
+            "Message{date='null', name='Никита', message='Привет, как дела: что делаешь?', fileName='null'}",
+            message.message.toString()
+        )
+    }
 }
