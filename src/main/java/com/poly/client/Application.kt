@@ -19,7 +19,8 @@ class Application {
         }.start()
 
         while (true) {
-            Buffer.senderBuffer.add(MessageData.createMessage(scanner.nextLine()))
+            val message = MessageData.createMessage(scanner.nextLine())
+            if (message != null) Buffer.senderBuffer.add(message)
         }
     }
 }
