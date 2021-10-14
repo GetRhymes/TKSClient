@@ -14,12 +14,12 @@ class MessageDataTest {
         val message2 = MessageData.createMessage("privet, kak dela fp:-/ ${System.getProperty(USER_HOME)}")
         Assert.assertEquals(
             "Message{date='null', name='nikita', message='privet, kak dela fp:-/ ', fileName='null'}",
-            message1!!.message.toString()
+            message1.message.toString()
         )
         Assert.assertEquals(
             "Message{date='null', name='nikita', message='privet, kak dela fp:-/ " +
                     "${System.getProperty(USER_HOME)}', fileName='null'}",
-            message2!!.message.toString()
+            message2.message.toString()
         )
     }
 
@@ -31,7 +31,7 @@ class MessageDataTest {
         val message = MessageData.createMessage("privet, kak dela fp:-/ ${file.absolutePath}")
         Assert.assertEquals(
             "Message{date='null', name='nikita', message='privet, kak dela ', fileName='${file.name}'}",
-            message!!.message.toString()
+            message.message.toString()
         )
         file.delete()
     }
@@ -42,7 +42,7 @@ class MessageDataTest {
         val message = MessageData.createMessage("Привет, как дела: что делаешь?")
         Assert.assertEquals(
             "Message{date='null', name='Никита', message='Привет, как дела: что делаешь?', fileName='null'}",
-            message!!.message.toString()
+            message.message.toString()
         )
     }
 }

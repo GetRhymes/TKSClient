@@ -20,8 +20,7 @@ object MessageData {
         return PolyFile(fileName, fileSize, fileContent)
     }
 
-    fun createMessage(message: String): MessageWithContent? {
-        if (message.matches(Regex("""(\s+|)"""))) return null
+    fun createMessage(message: String): MessageWithContent {
         val partsOfMessage = message.split(FILE_POINT).toMutableList()
         var polyFile = PolyFile()
         if (partsOfMessage.size > 1) {

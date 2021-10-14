@@ -9,7 +9,7 @@ import com.poly.sockets.MessageReader
 import com.poly.sockets.MessageWriter
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Thread.sleep
+import java.lang.Thread.currentThread
 import java.net.Socket
 import java.net.SocketException
 import java.util.*
@@ -50,19 +50,17 @@ object Client {
     }
 
     fun readMessage() {
-        while (true) {
-            sleep(1)
-            if (receiverBuffer.size > 0) {
-                val messageWithContent = receiverBuffer.poll()
-                var fileBlock = VOID
-                val message = messageWithContent.message
-                val content: ByteArray? = messageWithContent.content
-                if (content != null) {
-                    fileBlock = "$ATTACHMENT ${writeNewFile(message.fileName, content)}"
-                }
-                val (date, time) = parseDateTime(message.date)
-                println("[${date}][${time}][${message.name}]$DOUBLE_DOT ${message.text} $fileBlock")
+        while (!currentThread().isInterrupted) {
+            if (receiverBuffer.size < 1) continue
+            val messageWithContent = receiverBuffer.poll()
+            var fileBlock = VOID
+            val message = messageWithContent.message
+            val content: ByteArray? = messageWithContent.content
+            if (content != null) {
+                fileBlock = "$ATTACHMENT ${writeNewFile(message.fileName, content)}"
             }
+            val (date, time) = parseDateTime(message.date)
+            println("[${date}][${time}][${message.name}]$DOUBLE_DOT ${message.text} $fileBlock")
         }
     }
 

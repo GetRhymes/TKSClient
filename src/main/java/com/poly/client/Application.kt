@@ -13,14 +13,12 @@ class Application {
         Thread {
             Client.startClient(SERVER_HOST, SERVER_PORT)
         }.start()
-
         Thread {
             Client.readMessage()
         }.start()
 
         while (true) {
-            val message = MessageData.createMessage(scanner.nextLine())
-            if (message != null) Buffer.senderBuffer.add(message)
+            Buffer.senderBuffer.add(MessageData.createMessage(scanner.nextLine()))
         }
     }
 }
