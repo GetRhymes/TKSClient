@@ -23,5 +23,5 @@ const val TIME_SEPARATOR = "."
 const val DOUBLE_DOT = ":"
 
 //Server
-const val SERVER_HOST = "78.37.108.101"
-const val SERVER_PORT = 65432
+const val SERVER_HOST = "localhost"
+const val SERVER_PORT = 11122
